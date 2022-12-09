@@ -41,7 +41,7 @@ List TreeGrow(NumericMatrix X, NumericMatrix dmat, IntegerVector var_type, List 
       node = node + 1;
       IntegerVector sub_ind = which(where, node);
       N = sub_ind.size();
-      if ((testtype == "fastpermutation") & (N >= nmin))
+      if (N >= minsplit)
       {
         double s = 0;
         for (int i = 1; i < N; i++)
@@ -53,7 +53,7 @@ List TreeGrow(NumericMatrix X, NumericMatrix dmat, IntegerVector var_type, List 
         }
         s = s * 2;
         Split(node, X, sub_ind, dmat, var_type, teststat, minbucket, s, frame);
-        if (N >= nmin){
+        if ((testtype == "fastpermutation") & (N >= nmin)){
           for(int r = 0; r < R; r++){
             perm_stat_mat(r, node) = 0;
           }

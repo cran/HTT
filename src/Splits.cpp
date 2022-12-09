@@ -551,8 +551,7 @@ List Split(int Node, NumericMatrix x, IntegerVector sub_ind, NumericMatrix dmat,
   nn[Node] = n;
   NumericVector Split = frame["split"];
   NumericVector statistic = frame["statistic"];
-  IntegerVector
-    var = frame["var"];
+  IntegerVector var = frame["var"];
   statistic[Node] = optimal_stat;
   if (optimal_stat > 0)
   {

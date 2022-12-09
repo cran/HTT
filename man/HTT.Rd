@@ -52,7 +52,6 @@ plot(irishtt)
 mean(iris[, 5] == predict(irishtt))
 }
 
-
 \seealso{
   \code{\link{htt_control}}, \code{\link{print.htt}}, \code{\link{plot.htt}}, \code{\link{predict.htt}}
 }
