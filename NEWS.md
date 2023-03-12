@@ -6,3 +6,6 @@
 
 * Fix bugs. 
 
+## HTT 0.1.2
+
+* provide a formula method for HTT() function.

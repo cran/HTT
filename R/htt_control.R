@@ -37,6 +37,7 @@ htt_control <- function(teststat = c("energy0", "energy1"),
   } else {
     stop(sQuote("minbucket"), " should be at least 7")
   }
+  RET$minsplit = max(RET$minsplit, 3*RET$minbucket)
   if (R >= 19) {
     RET$R <- as.integer(R)
   } else {

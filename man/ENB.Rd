@@ -32,14 +32,13 @@ A. Tsanas, A. Xifara: 'Accurate quantitative estimation of energy performance of
 \examples{
 data(ENB)
 set.seed(1)
-train = sample(1:nrow(ENB), floor(nrow(ENB)*0.8))
-train_x = ENB[train, 1:8]
-train_y = ENB[train, 9:10]
-test_x = ENB[-train, 1:8]
-test_y = ENB[-train, 9:10]
-htt_enb = HTT(train_x, train_y, controls = htt_control(pt = 0.05, R = 99))
+idx = sample(1:nrow(ENB), floor(nrow(ENB)*0.8))
+train = ENB[idx, ]
+test = ENB[-idx, ]
+htt_enb = HTT(cbind(Y1, Y2) ~ . , data = train, controls = htt_control(pt = 0.05, R = 99))
 # prediction
-pred = predict(htt_enb, newdata = test_x)
+pred = predict(htt_enb, newdata = test)
+test_y = test[, 9:10]
 # MAE
 colMeans(abs(pred - test_y))
 # MSE

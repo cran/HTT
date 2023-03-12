@@ -6,7 +6,7 @@
 using namespace Rcpp;
 using namespace std;
 
-NumericMatrix distance(NumericMatrix y, double alpha);
+NumericMatrix dist(NumericMatrix y, double alpha);
 IntegerVector ordered(NumericVector x);
 NumericVector row_max(NumericMatrix m);
 int nCr(int n, int r);

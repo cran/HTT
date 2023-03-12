@@ -48,15 +48,15 @@
 }
 
 \examples{
-fit = HTT(iris[, 1:4], iris[, 5])
-plot(fit)
+irishtt = HTT(Species ~., data = iris)
+plot(irishtt)
 
 # change the line color and node color
-plot(fit, line.color = "black", node.color = "blue")
+plot(irishtt, line.color = "black", node.color = "blue")
 
 # change the line type
-plot(fit, line.type = "curved")
+plot(irishtt, line.type = "curved")
 
 # change the layout
-plot(fit, layout = "dendrogram")
+plot(irishtt, layout = "dendrogram")
 }

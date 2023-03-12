@@ -10,15 +10,15 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// distance
-NumericMatrix distance(NumericMatrix y, double alpha);
-RcppExport SEXP _HTT_distance(SEXP ySEXP, SEXP alphaSEXP) {
+// dist
+NumericMatrix dist(NumericMatrix y, double alpha);
+RcppExport SEXP _HTT_dist(SEXP ySEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(distance(y, alpha));
+    rcpp_result_gen = Rcpp::wrap(dist(y, alpha));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -38,7 +38,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_HTT_distance", (DL_FUNC) &_HTT_distance, 2},
+    {"_HTT_dist", (DL_FUNC) &_HTT_dist, 2},
     {"_HTT_TreeGrow", (DL_FUNC) &_HTT_TreeGrow, 4},
     {NULL, NULL, 0}
 };

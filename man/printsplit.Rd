@@ -27,6 +27,6 @@ printsplit(object)
 }
 
 \examples{
-fit = HTT(iris[, 1:4], iris[, 5])
-printsplit(fit)
+irishtt = HTT(Species ~., data = iris)
+printsplit(irishtt)
 }

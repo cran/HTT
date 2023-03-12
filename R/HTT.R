@@ -1,71 +1,53 @@
-HTT <- function(X, Y, method, distance = NULL, controls = htt_control()) {
+HTT <- function(formula, data = list(), method, distance = NULL, controls = htt_control(...), ...) {
+  if (missing(formula)) {
+    stop("argument 'formula' is missing, with no default")
+  }
+  mf = model.frame(formula = formula, data = data)
+  if(sum(sapply(mf, is.character))) {
+    stop("data class 'character' is not supported")
+  }
+  Y = model.extract(mf, "response")
+  mf[[1]] = NULL
+  X = mf
+
   if (missing(method)) {
-    if (is.factor(Y) || is.character(Y)) {
+    if (is.factor(Y)) {
       method <- "classification"
-    } else if ((is.matrix(Y) || is.vector(Y)) & is.numeric(Y)) {
-      method <- "regression"
-    } else if (is.data.frame(Y) & (sum(sapply(Y, is.numeric)) == ncol(Y))) {
-      Y = as.matrix(Y)
+    } else if (is.matrix(Y) || is.numeric(Y)) {
       method <- "regression"
     } else {
       stop("Y should be a numeric or factor!")
     }
   }
+
   method.int <- pmatch(method, c("regression", "classification"))
   if (is.na(method.int))
     stop("Invalid method")
-  if (is.matrix(X) & is.numeric(X)) {
-    XX <- X
-    X <- data.frame(X)
-    var_type <- rep(0, ncol(X))
-    names(var_type) <- colnames(X)
-  } else if (is.data.frame(X)) {
-    var_type <- sapply(X, function(x) {
-      if (is.numeric(x)) {
-        return(0)
-      } else if (is.ordered(x)) {
-        return(1)
-      } else if (is.factor(x)) {
-        return(2)
-      } else {
-        stop(" 'X' should be a numeric vector/matrix, factor or dataframe.")
-      }
-    })
-    XX <- lapply(X, function(x) {
-      if (!is.factor(x)) {
-        x
-      } else {
-        as.numeric(x)
-      }
-    })
-    XX <- as.matrix(as.data.frame(XX))
-  } else if (is.numeric(X)) {
-    X <- data.frame(X)
-    var_type <- 0
-    names(var_type) <- colnames(X)
-    XX <- as.matrix(X)
-  } else if (is.factor(X)) {
-    var_type <- 2
-    XX <- as.matrix(as.numeric(X))
-    X <- data.frame(X)
-    names(var_type) <- colnames(X)
-  } else {
-    stop(" 'X' should be a numeric vector/matrix, factor or dataframe.")
-  }
-  if (nrow(X) != nrow(as.matrix(Y))) {
-    stop("variable lengths differ (found for 'X' and 'Y')")
-  }
+
+  var_type <- sapply(X, function(x) {
+    if (is.numeric(x)) {
+      return(0)
+    } else if (is.ordered(x)) {
+      return(1)
+    } else {
+      return(2)
+    }
+  })
+  factor_cols <- sapply(X, is.factor)
+  X_mat = X
+  X_mat[factor_cols] <- lapply(X[factor_cols], as.numeric)
+  X_mat = as.matrix(X_mat)
   alpha <- controls$alpha
-  controls$maxnode <- ceiling(nrow(XX)/(controls$minsplit)) * 4 + 1
+  controls$maxnode <- ceiling(nrow(X)/(controls$minsplit)) * 4 + 1
 
   if (is.null(distance)) {
     if (method.int == 1L) {
-      dmat <- distance(as.matrix(Y), alpha)
+      dmat <- dist(as.matrix(Y), alpha)
     }
     if (method.int == 2L) {
       dmat <- outer(Y, Y, FUN = function(x, y) x != y)
     }
-    fit <- TreeGrow(XX, dmat, var_type, controls)
+    fit <- TreeGrow(X_mat, dmat, var_type, controls)
   } else {
     if (!is.matrix(distance)) {
       stop(" 'distance' should be a matrix")
@@ -88,7 +70,7 @@ HTT <- function(X, Y, method, distance = NULL, controls = htt_control()) {
     if (any(distance != t(distance))) {
       stop(" 'distance' should be a symmetric matrix")
     }
-    fit <- TreeGrow(XX, distance, var_type, controls)
+    fit <- TreeGrow(X_mat, distance, var_type, controls)
   }
   frame <- fit$frame
   where <- fit$where + 1

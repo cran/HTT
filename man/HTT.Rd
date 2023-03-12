@@ -10,12 +10,12 @@ Hypothesis Testing Tree
 }
 
 \usage{
-HTT(X, Y, method, distance, controls = htt_control())
+HTT(formula, data, method, distance, controls = htt_control(\dots), \dots)
 }
 
 \arguments{
-  \item{X}{ predictor variables in a vector, matrix or data.frame format. }
-  \item{Y}{ response variables in a vector, factor or matrix format. }
+  \item{formula}{ a symbolic description of the model to be fit. }
+  \item{data}{ a data frame containing the variables in the model. }
   \item{method}{ \code{"regression"} or \code{"classification"}.
                  If \code{method} is missing then the routine tries to make an intelligent guess.
                  If \code{Y} is factor, then \code{method = "classification"}.
@@ -25,6 +25,7 @@ HTT(X, Y, method, distance, controls = htt_control())
                    0-1 distance is used for classification tree.
                    Otherwise, use the \code{distance} as the distance matrix of \code{Y}. }
   \item{controls}{ a list of options that control details of the \code{HTT} algorithm. See \code{\link{htt_control}}. }
+  \item{\dots}{arguments passed to \code{\link{htt_control}}.}
 }
 
 \details{
@@ -42,14 +43,14 @@ Jiaqi Hu
 \examples{
 ## regression
 data("Boston", package = "MASS")
-Bostonhtt <- HTT(Boston[, 1:13], Boston[, 14], controls = htt_control(R = 99))
+Bostonhtt <- HTT(medv ~ . , data = Boston, controls = htt_control(R = 99))
 plot(Bostonhtt)
-mean((Boston[, 14] - predict(Bostonhtt))^2)
+mean((Boston$medv - predict(Bostonhtt))^2)
 
 ## classification
-irishtt <- HTT(iris[, 1:4], iris[, 5])
+irishtt <- HTT(Species ~., data = iris)
 plot(irishtt)
-mean(iris[, 5] == predict(irishtt))
+mean(iris$Species == predict(irishtt))
 }
 
 \seealso{

@@ -57,14 +57,14 @@ Compute predictions from \code{htt} object.
 }
 
 \examples{
-fit <- HTT(iris[, 1:4], iris[, 5])
+irishtt <- HTT(Species ~., data = iris)
 
 ## the predicted class
-predict(fit, type = "response")
+predict(irishtt, type = "response")
 
 ## class probabilities
-predict(fit, type = "prob")
+predict(irishtt, type = "prob")
 
 ## terminal node identifiers
-predict(fit, type = "node")
+predict(irishtt, type = "node")
 }

@@ -1,8 +1,8 @@
 Package: HTT
 Type: Package
 Title: Hypothesis Testing Tree
-Version: 0.1.1
-Date: 2022-12-09
+Version: 0.1.2
+Date: 2023-03-05
 Authors@R: c(
   person(given = "Jiaqi", family = "Hu", email = "hujiaqi@mail.ustc.edu.cn", role = c("cre", "aut")),
   person(given = "Zhe", family = "Gao", email = "gaozh8@mail2.sysu.edu.cn", role = c("aut")),
@@ -20,9 +20,9 @@ Depends: R (>= 3.5.0)
 Suggests: knitr, rmarkdown, MASS
 Imports: Rcpp (>= 1.0.6), ggraph, igraph, ggplot2
 LinkingTo: Rcpp
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2022-12-09 10:41:19 UTC; jqhu
+Packaged: 2023-03-12 14:10:03 UTC; hujq
 Repository: CRAN
-Date/Publication: 2022-12-09 11:02:30 UTC
+Date/Publication: 2023-03-12 14:30:02 UTC

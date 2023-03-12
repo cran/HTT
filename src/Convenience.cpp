@@ -13,7 +13,7 @@ using namespace std;
  *returns a distance matrix of Y
  */
 //[[Rcpp::export]]
-NumericMatrix distance(NumericMatrix y, double alpha) {
+NumericMatrix dist(NumericMatrix y, double alpha) {
   int n = y.rows();
   int d = y.cols();
   int i, j, k;

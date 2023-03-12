@@ -39,6 +39,6 @@
 }
 
 \examples{
-fit = HTT(iris[, 1:4], iris[, 5])
-print(fit)
+irishtt = HTT(Species ~., data = iris)
+print(irishtt)
 }
